@@ -62,6 +62,7 @@ public class LinkedListAlgo {
             curNode = nextNode; //当前指针后移
         }
         return preNode;
+
     }
 
     /**
