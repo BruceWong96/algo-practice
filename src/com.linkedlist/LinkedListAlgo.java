@@ -2,6 +2,9 @@ package com.linkedlist;
 
 import org.junit.Test;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * 1) 单链表反转
  * 2) 链表中环的检测
@@ -97,6 +100,7 @@ public class LinkedListAlgo {
             }
             slow = slow.next;       //慢指针每次移动1步
             fast = fast.next.next;  //快指针每次移动2步
+
         }
         return true;       //跳出循环则表示快指针与慢指针相等了，则表示有环
     }
@@ -124,6 +128,59 @@ public class LinkedListAlgo {
         System.out.println(flag);
     }
 
+    /**
+     * 3.两个有序的链表合并
+     */
+    public static Node mergeTwoLists(Node list1, Node list2){
+        Node soldier = new Node(0,null);  //设置哨兵链表
+        Node p = soldier;  //设置工作指针指向哨兵
 
+        while(list1 != null && list2 != null){   //只要有一个链表遍历完 就结束循环
+            if(list1.data < list2.data){  //若链表1的值较小
+                p.next = list1;            //将链表1的节点放入p链表
+                list1 = list1.next;     //链表1后移一个节点
+            }else {
+                p.next = list2;
+                list2 = list2.next;
+            }
+            p = p.next;   //移动工作指针
+        }
+        //结束循环后，链表1还有多余的节点，则此时p的指针域指向链表1
+        if (list1 != null){
+            p.next = list1;
+        }
+        //结束循环后，链表2还有多余的节点，则此时p的指针域指向链表2
+        if (list2 != null){
+            p.next = list2;
+        }
+        //返回哨兵节点的下一个节点即为结果（因为第一个节点为0）
+        return soldier.next;
 
+    }
+
+    /**
+     * 测试两个有序的链表合并
+     */
+    @Test
+    public void testMergeTwoLists(){
+        Node node9 = new Node(9, null);
+        Node node7 = new Node(7, node9);
+        Node node5 = new Node(5, node7);
+        Node node3 = new Node(3, node5);
+        Node node1 = new Node(1, node3);
+
+        Node node10 = new Node(10, null);
+        Node node8 = new Node(8, node10);
+        Node node6 = new Node(6, node8);
+        Node node4 = new Node(4, node6);
+        Node node2 = new Node(2, node4);
+
+        System.out.print("合并前的链表1：");
+        LinkedListAlgo.printAll(node1);
+        System.out.print("合并前的链表2：");
+        LinkedListAlgo.printAll(node2);
+        Node mergedTwoLists = LinkedListAlgo.mergeTwoLists(node1, node2);
+        System.out.print("合并后的新链表：");
+        LinkedListAlgo.printAll(mergedTwoLists);
+    }
 }
