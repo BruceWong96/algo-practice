@@ -62,7 +62,6 @@ public class LinkedListAlgo {
             curNode = nextNode; //当前指针后移
         }
         return preNode;
-
     }
 
     /**
@@ -81,6 +80,49 @@ public class LinkedListAlgo {
         System.out.println("反转之后的链表：");
         Node reversedList = LinkedListAlgo.reverse(node1);
         LinkedListAlgo.printAll(reversedList);
+    }
+
+    /**
+     * 2.链表中环的检测
+     */
+    public static boolean checkCircle(Node list){
+        if (list == null){
+            return false;
+        }
+        Node slow = list;
+        Node fast = list.next;
+        while (slow != null && fast != null){
+            if (slow == fast){
+                return true;
+            }
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return false;
+    }
+
+    /**
+     * 测试链表中环的检测
+     */
+    @Test
+    public void testcCheckCircle() {
+        Node node5 = new Node(5, null);
+        Node node4 = new Node(4, node5);
+        Node node3 = new Node(3, node4);
+        Node node2 = new Node(2, node3);
+        Node node1 = new Node(1, node2);
+
+        System.out.println("无环链表：");
+        LinkedListAlgo.printAll(node1);
+        Boolean flag = LinkedListAlgo.checkCircle(node1);
+        System.out.println(flag);
+
+        node5.next = node3;
+
+        System.out.println("有环链表：");
+        flag = LinkedListAlgo.checkCircle(node1);
+        System.out.println(flag);
+
     }
 
 }
