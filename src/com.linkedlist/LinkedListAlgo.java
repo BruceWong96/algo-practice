@@ -189,7 +189,6 @@ public class LinkedListAlgo {
      */
     public static Node removeLastKth(Node head, int n){
         Node soldier = new Node(0,head);   //设置哨兵协助
-
         Node first = soldier, second = soldier;   //设置第一个节点
 
         for (int i = 0 ; i <= n; i ++){   //使first指针-second指针 = n+1
@@ -226,5 +225,39 @@ public class LinkedListAlgo {
         System.out.print("删除后的链表：");
         LinkedListAlgo.printAll(newNode1);
 
+    }
+
+    /**
+     * 5.求链表的中间结点
+     */
+    public static Node findMiddleNode(Node head){
+        Node fast = head;   //初始化快慢指针
+        Node slow = head;
+
+        //当链表长度为偶数时 截止条件为fast = null
+        //当链表长度为奇数时 截止条件为fast.next = null
+        while (fast != null && fast.next != null){
+            slow = slow.next;       //慢指针每次移动一步
+            fast = fast.next.next;  //快指针每次移动两步
+        }
+        return slow;    //此时慢指针即为所求
+    }
+
+    /**
+     * 测试求链表的中间结点
+     */
+    @Test
+    public void testFindMiddleNode(){
+        Node node9 = new Node(9, null);
+        Node node7 = new Node(7, node9);
+        Node node5 = new Node(5, node7);
+        Node node3 = new Node(3, node5);
+        Node node1 = new Node(1, node3);
+
+        System.out.println("原链表：");
+        LinkedListAlgo.printAll(node1);
+        Node middle = LinkedListAlgo.findMiddleNode(node1);
+        System.out.println("中间节点：");
+        System.out.println(middle.getData());
     }
 }
