@@ -52,7 +52,7 @@ public class LinkedListAlgo {
      *   1.单链表的反转
      */
     public static Node reverse(Node list){
-        Node curNode = list;
+        Node curNode = list;   //curNode指向当前节点
         Node nextNode = null;
         Node preNode = null;
         while (curNode != null){
@@ -86,19 +86,19 @@ public class LinkedListAlgo {
      * 2.链表中环的检测
      */
     public static boolean checkCircle(Node list){
-        if (list == null){
+        if (list == null){   //链表为空则返回false
             return false;
         }
-        Node slow = list;
-        Node fast = list.next;
-        while (slow != null && fast != null){
-            if (slow == fast){
-                return true;
+        Node slow = list;    //慢指针指向当前节点
+        Node fast = list.next;  //快指针指向当前节点的下一个节点
+        while (slow != fast){   //慢指针与快指针不相等，则继续循环
+            if (slow == null || fast == null){      //如果快指针或者慢指针到达了null则表示遍历完毕，没有环
+                return false;
             }
-            slow = slow.next;
-            fast = fast.next.next;
+            slow = slow.next;       //慢指针每次移动1步
+            fast = fast.next.next;  //快指针每次移动2步
         }
-        return false;
+        return true;       //跳出循环则表示快指针与慢指针相等了，则表示有环
     }
 
     /**
@@ -122,7 +122,8 @@ public class LinkedListAlgo {
         System.out.println("有环链表：");
         flag = LinkedListAlgo.checkCircle(node1);
         System.out.println(flag);
-
     }
+
+
 
 }
