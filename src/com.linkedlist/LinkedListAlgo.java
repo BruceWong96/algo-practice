@@ -52,7 +52,7 @@ public class LinkedListAlgo {
     }
 
     /**
-     *   1.单链表的反转
+     * 1.单链表的反转
      */
     public static Node reverse(Node list){
         Node curNode = list;   //curNode指向当前节点
@@ -182,5 +182,49 @@ public class LinkedListAlgo {
         Node mergedTwoLists = LinkedListAlgo.mergeTwoLists(node1, node2);
         System.out.print("合并后的新链表：");
         LinkedListAlgo.printAll(mergedTwoLists);
+    }
+
+    /**
+     * 4.删除链表倒数第n个结点
+     */
+    public static Node removeLastKth(Node head, int n){
+        Node soldier = new Node(0,head);   //设置哨兵协助
+
+        Node first = soldier, second = soldier;   //设置第一个节点
+
+        for (int i = 0 ; i <= n; i ++){   //使first指针-second指针 = n+1
+            first = first.next;
+        }
+
+        while (first != null){          //一旦first移动到了尾节点的null指针域，就结束
+            first = first.next;         //移动first
+            second = second.next;       //移动second
+        }   //这样是为了使second移动到要删除节点的上一个节点
+
+        //删除节点操作
+        second.next = second.next.next;
+
+        //返回去除虚拟头节点的链表即可
+        return soldier.next;
+    }
+
+    /**
+     * 测试删除链表倒数第n个结点
+     */
+    @Test
+    public void testRemoveLastKth(){
+        Node node9 = new Node(9, null);
+        Node node7 = new Node(7, node9);
+        Node node5 = new Node(5, node7);
+        Node node3 = new Node(3, node5);
+        Node node1 = new Node(1, node3);
+
+        System.out.print("删除前的链表：");
+        LinkedListAlgo.printAll(node1);
+
+        Node newNode1 = LinkedListAlgo.removeLastKth(node1,3);
+        System.out.print("删除后的链表：");
+        LinkedListAlgo.printAll(newNode1);
+
     }
 }
